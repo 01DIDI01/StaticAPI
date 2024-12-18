@@ -5,12 +5,14 @@ pipeline {
         DOCKER_TAG = "build-${env.BUILD_NUMBER}"
         FULL_IMAGE_NAME = "${DOCKER_IMAGE}:${DOCKER_TAG}"
     }
+    
     stages {
         stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/01DIDI01/flask-app.git'
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -18,6 +20,7 @@ pipeline {
                 }
             }
         }
+
         stage('Push Docker Image') {
             steps {
                 script {
@@ -27,6 +30,7 @@ pipeline {
                 }
             }
         }
+
         stage('Run Docker Container') {
             steps {
                 script {
@@ -37,6 +41,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             echo 'Pipeline completed.'
